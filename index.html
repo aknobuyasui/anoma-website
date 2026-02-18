@@ -9,224 +9,347 @@
     <style>
         body {
             font-family: 'Zen Maru Gothic', sans-serif;
-            background-color: #fffaf5; /* 非常に薄いオレンジ（クリーム）背景 */
-            color: #431407; /* 濃いブラウンの文字色 */
-            scroll-behavior: smooth;
+            background-color: #fffaf5;
+            color: #431407;
+            overflow-x: hidden;
         }
-        /* オレンジベースの配色設定 */
-        .text-main-orange { color: #ea580c; }
-        .bg-main-orange { background-color: #f97316; }
-        .bg-light-orange { background-color: #fff7ed; }
-        .border-main-orange { border-color: #fb923c; }
-        
-        .gradient-sunset {
-            background: linear-gradient(180deg, #ffedd5 0%, #fffaf5 100%);
+        .page-content {
+            display: none;
+            animation: fadeIn 0.4s ease-out forwards;
         }
-        .card {
-            background: white;
-            border: 1px solid #ffedd5;
-            transition: all 0.6s ease-out;
-            opacity: 0;
-            transform: translateY(20px);
-            box-shadow: 0 4px 20px rgba(234, 88, 12, 0.05);
-        }
-        .card.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .soft-shadow {
-            box-shadow: 0 10px 30px rgba(234, 88, 12, 0.15);
-        }
-        .fade-in {
-            animation: fadeIn 1.5s ease-out forwards;
+        .page-content.active {
+            display: block;
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        .bg-main-orange { background-color: #f97316; }
+        .text-main-orange { color: #ea580c; }
+        .border-main-orange { border-color: #f97316; }
+        .gradient-sunset {
+            background: linear-gradient(180deg, #ffedd5 0%, #fffaf5 100%);
+        }
+        .tab-active {
+            color: #f97316;
+            border-bottom: 3px solid #f97316;
+        }
+        /* ロゴ用のスタイル */
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .logo-svg {
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+        }
     </style>
 </head>
 <body class="antialiased">
 
-    <!-- Hero Section -->
-    <header class="relative h-screen flex items-center justify-center overflow-hidden gradient-sunset">
-        <div class="absolute inset-0 z-0">
-            <!-- Background Decoration -->
-            <div class="absolute top-20 left-10 w-4 h-4 bg-orange-200 rounded-full opacity-40 animate-pulse"></div>
-            <div class="absolute top-40 right-20 w-2 h-2 bg-orange-300 rounded-full opacity-30"></div>
-            <div class="absolute bottom-1/4 right-1/4 w-64 h-64 bg-orange-400 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
-            <div class="absolute top-1/3 left-1/3 w-48 h-48 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
-        </div>
-        
-        <div class="relative z-10 text-center px-6 fade-in">
-            <h1 class="text-5xl md:text-7xl font-bold mb-6 tracking-[0.2em] text-orange-900">あのま</h1>
-            <p class="text-lg md:text-2xl text-main-orange tracking-widest mb-10 font-bold">夜に灯る、もうひとつの家</p>
-            <div class="w-16 h-1 bg-main-orange mx-auto rounded-full"></div>
-        </div>
-        
-        <div class="absolute bottom-10 w-full text-center animate-bounce">
-            <span class="text-sm text-orange-400 tracking-widest uppercase">scroll</span>
-        </div>
-    </header>
-
-    <!-- Philosophy Section -->
-    <section class="py-24 px-6 max-w-2xl mx-auto space-y-16">
-        <div class="text-center">
-            <h2 class="text-2xl font-bold mb-10 tracking-widest text-orange-900">あのまとは。</h2>
-            <p class="leading-[2.2] mb-8 text-lg text-orange-800">
-                夜に働く親と子どもを、そっと支える場所です。<br>
-                名前の由来は、子どもにとっての<br>
-                <span class="text-main-orange font-bold border-b-2 border-orange-200">“家と学校の間”</span>にある居場所、<br>
-                「〜の間（ま）」からきています。
-            </p>
-        </div>
-
-        <div class="card p-10 rounded-[2.5rem] soft-shadow text-center">
-            <h3 class="text-xl font-bold mb-8 tracking-widest text-orange-900">「あ」に込めた願い</h3>
-            <div class="grid grid-cols-2 gap-6">
-                <div class="p-4 bg-orange-50 rounded-2xl"><p class="text-2xl mb-1 text-main-orange font-bold">愛</p><p class="text-[10px] text-orange-300 uppercase tracking-tighter">Ai</p></div>
-                <div class="p-4 bg-orange-50 rounded-2xl"><p class="text-2xl mb-1 text-main-orange font-bold">ありがとう</p><p class="text-[10px] text-orange-300 uppercase tracking-tighter">Arigato</p></div>
-                <div class="p-4 bg-orange-50 rounded-2xl"><p class="text-2xl mb-1 text-main-orange font-bold">安心</p><p class="text-[10px] text-orange-300 uppercase tracking-tighter">Anshin</p></div>
-                <div class="p-4 bg-orange-50 rounded-2xl"><p class="text-2xl mb-1 text-main-orange font-bold">安全</p><p class="text-[10px] text-orange-300 uppercase tracking-tighter">Anzen</p></div>
-                <div class="col-span-2 p-6 border-t border-orange-100 mt-2">
-                    <p class="text-xl md:text-2xl text-main-orange font-bold tracking-widest">明日へとつながる希望</p>
-                </div>
+    <!-- Header Navigation -->
+    <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-orange-100 shadow-sm">
+        <div class="max-w-4xl mx-auto px-4 flex justify-between items-center h-16">
+            <button onclick="showPage('top')" class="flex items-center gap-2">
+                <!-- 小型ロゴ -->
+                <svg width="32" height="32" viewBox="0 0 100 100" class="logo-svg">
+                    <rect width="100" height="100" rx="10" fill="#f97316"/>
+                    <path d="M20 55 C 20 25, 80 25, 80 55 L 80 85 L 20 85 Z" fill="white"/>
+                    <text x="50" y="70" font-family="Zen Maru Gothic" font-size="45" fill="#f97316" text-anchor="middle" font-weight="bold">あ</text>
+                </svg>
+                <span class="text-xl font-bold text-orange-900 tracking-tighter">あのま</span>
+            </button>
+            <div class="flex gap-4 md:gap-6 text-[10px] md:text-sm font-bold text-orange-800 overflow-x-auto pb-1">
+                <button onclick="showPage('philosophy')" id="nav-philosophy">想い</button>
+                <button onclick="showPage('usage')" id="nav-usage">利用案内</button>
+                <button onclick="showPage('access')" id="nav-access">アクセス</button>
+                <button onclick="showPage('support')" id="nav-support">支援</button>
+                <button onclick="showPage('contact')" id="nav-contact">お問合せ</button>
             </div>
-            <p class="mt-8 text-sm text-orange-400 italic font-bold">そして、味光路（あじこうじ）の「あ」</p>
         </div>
-    </section>
+    </nav>
 
-    <!-- Message Section -->
-    <section class="py-24 bg-orange-600 text-white rounded-t-[4rem] shadow-inner">
-        <div class="max-w-2xl mx-auto px-6">
-            <div class="mb-20 text-center md:text-left">
-                <h2 class="text-3xl font-bold mb-8">誰も悪くありません。</h2>
-                <div class="space-y-6 text-orange-50 leading-relaxed text-lg">
-                    <p>
-                        夜に働くお母さんがいます。<br>
-                        その時間、ひとりで過ごしている子どもがいます。
-                    </p>
-                    <p>
-                        誰も悪くありません。<br>
-                        ただ、それぞれが一生懸命に生きているだけ。
-                    </p>
-                    <p class="text-white font-bold border-l-4 border-yellow-400 pl-4 bg-orange-700/30 py-4 rounded-r-xl">
-                        だからこそ「あのま」は、<br>
-                        夜という時間に、あたたかい灯りをともします。
-                    </p>
-                </div>
+    <!-- TOP PAGE -->
+    <div id="page-top" class="page-content active">
+        <header class="h-[75vh] flex flex-col items-center justify-center text-center px-6 gradient-sunset">
+            <div class="logo-container mb-8 fade-in">
+                <!-- メインロゴの再現 -->
+                <svg width="220" height="260" viewBox="0 0 220 260" class="logo-svg mb-4">
+                    <!-- 背景オレンジ -->
+                    <rect width="220" height="260" rx="20" fill="#f97316"/>
+                    <!-- 白い家の形 -->
+                    <path d="M40 120 Q 110 30, 180 120 L 180 200 Q 180 220, 160 220 L 60 220 Q 40 220, 40 200 Z" fill="white"/>
+                    <!-- 「あ」 -->
+                    <text x="110" y="165" font-family="Zen Maru Gothic" font-size="100" fill="#f97316" text-anchor="middle" font-weight="bold">あ</text>
+                    <!-- 「こども食堂」 -->
+                    <text x="110" y="245" font-family="Zen Maru Gothic" font-size="24" fill="white" text-anchor="middle" letter-spacing="4">こども食堂</text>
+                </svg>
+                <p class="text-4xl font-bold text-orange-900 tracking-[0.3em] mb-2 uppercase">ANOMA</p>
+                <p class="text-lg text-main-orange font-bold tracking-widest">夜に灯る、もうひとつの家</p>
+            </div>
+            <div class="w-12 h-1 bg-main-orange rounded-full"></div>
+        </header>
+        
+        <section class="py-12 px-6">
+            <div class="max-w-md mx-auto grid grid-cols-1 gap-4">
+                <button onclick="showPage('philosophy')" class="bg-white p-6 rounded-3xl border border-orange-100 shadow-sm flex justify-between items-center hover:bg-orange-50 transition text-left">
+                    <span class="font-bold">あのまの想い</span>
+                    <span class="text-main-orange">→</span>
+                </button>
+                <button onclick="showPage('usage')" class="bg-white p-6 rounded-3xl border border-orange-100 shadow-sm flex justify-between items-center hover:bg-orange-50 transition text-left">
+                    <span class="font-bold">利用案内・スケジュール</span>
+                    <span class="text-main-orange">→</span>
+                </button>
+                <button onclick="showPage('contact')" class="bg-main-orange text-white p-6 rounded-3xl shadow-lg flex justify-between items-center hover:opacity-90 transition text-left">
+                    <span class="font-bold">お問合せ（LINE・電話）</span>
+                    <span>✉️</span>
+                </button>
+            </div>
+        </section>
+    </div>
+
+    <!-- PHILOSOPHY PAGE -->
+    <div id="page-philosophy" class="page-content py-16 px-6 max-w-2xl mx-auto">
+        <h2 class="text-3xl font-bold mb-12 text-center text-orange-900 tracking-widest">想い・哲学</h2>
+        <div class="space-y-12">
+            <div class="text-center">
+                <p class="leading-[2.5] text-lg text-orange-800">
+                    夜に働く親と子どもを、そっと支える場所です。<br>
+                    名前の由来は、子どもにとっての<br>
+                    <span class="text-main-orange font-bold border-b-2 border-orange-200">“家と学校の間”</span>にある居場所、<br>
+                    「〜の間（ま）」からきています。
+                </p>
             </div>
 
             <div class="grid gap-6">
-                <div class="flex items-center gap-6 p-6 bg-white/10 rounded-3xl border border-white/20">
-                    <div class="w-16 h-16 flex-shrink-0 bg-white flex items-center justify-center rounded-2xl text-2xl text-orange-600 font-bold">食</div>
-                    <div>
-                        <h4 class="font-bold text-xl mb-1">温かいごはん</h4>
-                        <p class="text-sm text-orange-100">お腹も心も満たされる、手作りの食事を提供します。</p>
+                <div class="bg-white p-8 rounded-[2.5rem] border border-orange-100 shadow-sm">
+                    <h3 class="text-xl font-bold mb-4 text-main-orange">「あ」に込めた五つの光</h3>
+                    <div class="text-sm leading-[2] text-orange-900">
+                        「あ」は全ての始まりの音。ここには私たちの誓いが込められています。<br>
+                        <ul class="mt-4 space-y-2">
+                            <li><strong>愛（あい）</strong>：ありのままの自分を認められる場所</li>
+                            <li><strong>ありがとう</strong>：支え合える喜びを知る場所</li>
+                            <li><strong>安心・安全</strong>：心と身体が守られ、深呼吸できる場所</li>
+                            <li><strong>明日</strong>：今日を乗り越え、希望を持って次へ向かう場所</li>
+                            <li>そして、この街・<strong>味光路</strong>の「あ」。</li>
+                        </ul>
                     </div>
                 </div>
-                <div class="flex items-center gap-6 p-6 bg-white/10 rounded-3xl border border-white/20">
-                    <div class="w-16 h-16 flex-shrink-0 bg-white flex items-center justify-center rounded-2xl text-2xl text-orange-600 font-bold">守</div>
-                    <div>
-                        <h4 class="font-bold text-xl mb-1">安心できる大人の見守り</h4>
-                        <p class="text-sm text-orange-100">否定せず、ただそばにいる。安心できる大人が見守ります。</p>
-                    </div>
-                </div>
-                <div class="flex items-center gap-6 p-6 bg-white/10 rounded-3xl border border-white/20">
-                    <div class="w-16 h-16 flex-shrink-0 bg-white flex items-center justify-center rounded-2xl text-2xl text-orange-600 font-bold">家</div>
-                    <div>
-                        <h4 class="font-bold text-xl mb-1">「ただいま」「おかえり」</h4>
-                        <p class="text-sm text-orange-100">自然に言葉が交わされる、家のように落ち着ける空間です。</p>
+
+                <div class="bg-white p-8 rounded-[2.5rem] border border-orange-100 shadow-sm">
+                    <h3 class="text-xl font-bold mb-4 text-main-orange">「間（ま）」が繋ぐもの</h3>
+                    <div class="text-sm leading-[2] text-orange-900">
+                        私たちは、社会の隙間に灯りを灯す「境界線の守り手」でありたいと考えています。<br>
+                        <ul class="mt-4 space-y-4">
+                            <li><strong>家と学校の間</strong>：教育でもしつけでもない、等身大の自分でいられる第3の場所。</li>
+                            <li><strong>昼と夜の間</strong>：孤独が深まる夕暮れから深夜まで、誰かがそばにいる温かな時間。</li>
+                            <li><strong>孤独と繋がりの間</strong>：独り立ちを強いるのではなく、頼り、頼られる関係性の結び目。</li>
+                        </ul>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Closing Message -->
-    <section class="py-32 px-6 text-center gradient-sunset">
-        <div class="max-w-2xl mx-auto">
-            <p class="text-2xl md:text-3xl mb-10 leading-relaxed tracking-widest font-bold text-orange-900">
-                夜の街を、<br>
-                やさしさのある街へ。
-            </p>
-            <p class="text-base text-orange-700 mb-16 leading-[2]">
-                ここで過ごす時間が、<br>
-                子どもたちの“明日”につながりますように。<br>
-                それが、あのまの願いです。
-            </p>
             
-            <button id="contactBtn" class="inline-block bg-main-orange text-white px-12 py-5 rounded-full font-bold shadow-xl hover:bg-orange-600 active:scale-95 transition-all duration-300">
-                お問い合わせ・ご相談
-            </button>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="py-12 text-center border-t border-orange-100 text-xs text-orange-300 tracking-widest">
-        &copy; 2024 あのま - 味光路
-    </footer>
-
-    <!-- Contact Modal -->
-    <div id="modal" class="fixed inset-0 z-50 flex items-center justify-center p-6 hidden">
-        <div class="absolute inset-0 bg-orange-950/60 backdrop-blur-md" id="modalOverlay"></div>
-        <div class="relative bg-white p-8 rounded-[2.5rem] max-w-sm w-full border border-orange-100 shadow-2xl max-h-[90vh] overflow-y-auto">
-            <h3 class="text-2xl font-bold mb-6 text-center text-orange-900">お問い合わせ</h3>
-            <div class="space-y-6 mb-8 text-center">
-                <p class="text-sm leading-relaxed text-orange-700">
-                    LINE公式アカウント、またはお電話にてお気軽にご連絡ください。
+            <div class="bg-orange-600 text-white p-8 rounded-[3rem] shadow-xl">
+                <h3 class="text-2xl font-bold mb-6 text-center">誰も悪くありません。</h3>
+                <p class="leading-loose opacity-90 mb-6">
+                    夜に働くお母さんがいます。その時間、ひとりで過ごしている子どもがいます。<br>
+                    誰も悪くありません。ただ、それぞれが一生懸命に生きているだけ。
                 </p>
-                
-                <!-- LINE QR Code -->
-                <div class="bg-white p-4 rounded-2xl inline-block mx-auto mb-4 border border-orange-100 shadow-sm">
-                    <img src="https://qr-official.line.me/gs/M_843eagsn_BW.png?oat_content=qr" alt="あのま公式LINE QRコード" class="w-32 h-32 mx-auto">
-                    <p class="text-[10px] text-orange-900 mt-2 font-bold">公式LINEで相談する</p>
-                </div>
-
-                <div class="p-4 bg-orange-50 rounded-2xl border border-orange-100">
-                    <p class="text-xs text-orange-400 mb-1">お電話はこちら</p>
-                    <a href="tel:07090500488" class="text-xl font-bold tracking-widest text-main-orange">070-9050-0488</a>
-                </div>
-                <p class="text-[10px] text-orange-300 font-bold">受付時間: 11:00 〜 19:00</p>
+                <p class="font-bold border-l-4 border-yellow-400 pl-4 py-2">
+                    だからこそ私たちは、夜という時間に、あたたかい灯りをともします。
+                </p>
             </div>
-            <button id="closeBtn" class="w-full py-4 bg-orange-100 text-orange-600 hover:bg-orange-200 rounded-2xl font-bold transition-colors">閉じる</button>
         </div>
     </div>
 
+    <!-- USAGE PAGE -->
+    <div id="page-usage" class="page-content py-16 px-6 max-w-2xl mx-auto">
+        <h2 class="text-3xl font-bold mb-12 text-center text-orange-900 tracking-widest">利用案内</h2>
+        
+        <div class="space-y-6">
+            <div class="bg-white p-8 rounded-[2.5rem] border border-orange-100 shadow-sm">
+                <h3 class="text-xl font-bold mb-6 text-main-orange flex items-center gap-2">
+                    <span>🗓️</span> 開催スケジュール
+                </h3>
+                <dl class="space-y-4">
+                    <div class="flex justify-between border-b border-orange-50 pb-2">
+                        <dt class="font-bold">開所日</dt>
+                        <dd>月曜日 〜 土曜日</dd>
+                    </div>
+                    <div class="flex justify-between border-b border-orange-50 pb-2">
+                        <dt class="font-bold">時間</dt>
+                        <dd>18:00 〜 翌 2:00 (26:00)</dd>
+                    </div>
+                    <p class="text-xs text-orange-400 mt-2">※日曜日・祝日はお休みです。</p>
+                </dl>
+            </div>
+
+            <div class="bg-white p-8 rounded-[2.5rem] border border-orange-100 shadow-sm">
+                <h3 class="text-xl font-bold mb-6 text-main-orange flex items-center gap-2">
+                    <span>🎒</span> 対象・利用料
+                </h3>
+                <div class="space-y-4">
+                    <div>
+                        <p class="font-bold text-sm text-orange-400 mb-1">対象</p>
+                        <p class="text-orange-900 leading-relaxed text-sm md:text-base">
+                            ・夜間にひとりでお留守番をする小中高生<br>
+                            ・味光路の飲食店等で夜に働く親御さん
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-orange-50">
+                        <p class="font-bold text-sm text-orange-400 mb-1">利用料</p>
+                        <p class="text-3xl font-bold text-main-orange">無料</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-orange-50 p-8 rounded-[2.5rem] border border-orange-100 relative overflow-hidden">
+                <div class="absolute top-0 right-0 bg-main-orange text-white text-[10px] px-3 py-1 font-bold rounded-bl-xl uppercase tracking-tighter">Pro Quality</div>
+                <h4 class="font-bold text-xl mb-4 text-main-orange">プロ品質の料理</h4>
+                <p class="text-sm text-orange-800 leading-relaxed">
+                    味光路で実際に店舗を経営している料理人が、腕を振るいます。<br>
+                    子どもたちに「本物の味」と「温かさ」を届ける。それが私たちの誇りです。
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ACCESS PAGE -->
+    <div id="page-access" class="page-content py-16 px-6 max-w-2xl mx-auto text-center">
+        <h2 class="text-3xl font-bold mb-12 text-orange-900 tracking-widest">アクセス</h2>
+        <div class="space-y-8">
+            <div class="bg-white p-8 rounded-[2.5rem] border border-orange-100 shadow-sm text-left">
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="font-bold text-main-orange mb-1">所在地</h4>
+                        <p class="text-lg font-bold">和歌山県田辺市 湊（味光路内）</p>
+                        <p class="text-sm text-orange-600">「あのま」拠点</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-main-orange mb-1">交通</h4>
+                        <p>JR紀伊田辺駅から徒歩3分</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="w-full h-80 bg-orange-100 rounded-[2.5rem] flex items-center justify-center border-2 border-dashed border-orange-200">
+                <div class="text-center text-orange-400">
+                    <p class="text-5xl mb-4">📍</p>
+                    <p class="font-bold tracking-widest uppercase">Location Map</p>
+                    <p class="text-[10px] mt-2 italic">味光路の通りのなかにあります</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SUPPORT PAGE -->
+    <div id="page-support" class="page-content py-16 px-6 max-w-2xl mx-auto text-center">
+        <h2 class="text-3xl font-bold mb-12 text-orange-900 tracking-widest">応援・支援</h2>
+        <div class="bg-white p-10 rounded-[3rem] border border-orange-100 shadow-xl space-y-8">
+            <p class="text-orange-800 leading-relaxed">
+                「あのま」は完全無料で運営しています。そのため、地域の皆さまの温かいご支援が欠かせません。
+            </p>
+            <div class="grid gap-4 text-left">
+                <div class="p-6 bg-orange-50 rounded-2xl">
+                    <h4 class="font-bold text-main-orange mb-2">食材の寄付</h4>
+                    <p class="text-sm">お米、旬の野菜、お肉など。プロの料理人が最高の一皿に仕上げ、子どもたちに提供します。</p>
+                </div>
+                <div class="p-6 bg-orange-50 rounded-2xl">
+                    <h4 class="font-bold text-main-orange mb-2">運営費の寄付</h4>
+                    <p class="text-sm">無料運営を維持するための光熱費や備品費として活用します。少額からでも大きな力になります。</p>
+                </div>
+            </div>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLScP7YStW2o7yIwvEU2mDoCq739zirJJvLI9L7zfPU1PhODEeA/viewform?usp=header" target="_blank" class="block w-full py-4 bg-main-orange text-white rounded-2xl font-bold shadow-lg hover:opacity-90 transition text-center">
+                支援について詳しく聞く・申し込む
+            </a>
+        </div>
+    </div>
+
+    <!-- CONTACT PAGE -->
+    <div id="page-contact" class="page-content py-16 px-6 max-w-2xl mx-auto">
+        <h2 class="text-3xl font-bold mb-12 text-center text-orange-900 tracking-widest">お問合せ</h2>
+        <div class="space-y-8">
+            <!-- LINE QR -->
+            <div class="bg-white p-10 rounded-[3rem] border border-orange-100 shadow-xl text-center">
+                <div class="mb-6">
+                    <img src="https://qr-official.line.me/gs/M_843eagsn_BW.png?oat_content=qr" alt="LINE QR" class="w-40 h-40 mx-auto border p-2 rounded-xl">
+                    <p class="mt-4 font-bold text-xl text-orange-900 tracking-wider">公式LINEで相談</p>
+                    <p class="text-sm text-orange-400">24時間メッセージ受付中</p>
+                </div>
+                <a href="https://line.me/R/ti/p/@843eagsn" class="inline-block bg-[#06C755] text-white px-10 py-4 rounded-full font-bold shadow-md hover:scale-105 transition-transform">
+                    LINE友だち追加
+                </a>
+            </div>
+
+            <!-- Phone -->
+            <div class="bg-orange-900 text-white p-10 rounded-[3rem] text-center shadow-2xl">
+                <p class="text-orange-300 text-xs mb-2 font-bold tracking-[0.2em] uppercase">Phone Contact</p>
+                <a href="tel:07090500488" class="text-3xl md:text-4xl font-bold mb-4 block">070-9050-0488</a>
+                <p class="text-sm opacity-70">事務受付: 11:00 〜 19:00</p>
+                <div class="mt-8 pt-8 border-t border-white/10">
+                    <p class="text-lg font-bold tracking-widest text-orange-200 italic leading-relaxed">「ただいま」「おかえり」が<br>交わされる街へ</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-12 text-center text-[10px] text-orange-300 tracking-widest uppercase">
+        &copy; 2026 anoma ajikouji project
+    </footer>
+
     <script>
-        const modal = document.getElementById('modal');
-        const contactBtn = document.getElementById('contactBtn');
-        const closeBtn = document.getElementById('closeBtn');
-        const modalOverlay = document.getElementById('modalOverlay');
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page-content');
+            pages.forEach(p => p.classList.remove('active'));
+            
+            const targetPage = document.getElementById('page-' + pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+                window.scrollTo(0, 0);
+            }
 
-        contactBtn.addEventListener('click', () => {
-            modal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        });
-
-        const closeModal = () => {
-            modal.classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        };
-
-        closeBtn.addEventListener('click', closeModal);
-        modalOverlay.addEventListener('click', closeModal);
-
-        // Scroll Reveal Animation
-        const observerOptions = {
-            threshold: 0.1
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
+            const navIds = ['philosophy', 'usage', 'access', 'support', 'contact'];
+            navIds.forEach(id => {
+                const el = document.getElementById('nav-' + id);
+                if (el) {
+                    if (id === pageId) el.classList.add('tab-active');
+                    else el.classList.remove('tab-active');
                 }
             });
-        }, observerOptions);
 
-        document.querySelectorAll('.card').forEach(card => {
-            observer.observe(card);
+            try {
+                if (pageId !== 'top') {
+                    window.location.hash = pageId;
+                } else {
+                    if (window.location.hash) {
+                        window.location.hash = '';
+                    }
+                }
+            } catch (e) {
+                console.warn("History API restricted:", e);
+            }
+        }
+
+        window.addEventListener('load', () => {
+            try {
+                const hash = window.location.hash.replace('#', '');
+                if (hash && ['philosophy', 'usage', 'access', 'support', 'contact'].includes(hash)) {
+                    showPage(hash);
+                } else {
+                    showPage('top');
+                }
+            } catch (e) {
+                showPage('top');
+            }
+        });
+
+        window.addEventListener('hashchange', () => {
+            try {
+                const hash = window.location.hash.replace('#', '');
+                if (hash) showPage(hash);
+                else showPage('top');
+            } catch (e) { }
         });
     </script>
 </body>
