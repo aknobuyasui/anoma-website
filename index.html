@@ -9,29 +9,33 @@
     <style>
         body {
             font-family: 'Zen Maru Gothic', sans-serif;
-            background-color: #0f172a; /* 深い夜空の色 */
-            color: #f8fafc;
+            background-color: #fffaf5; /* 非常に薄いオレンジ（クリーム）背景 */
+            color: #431407; /* 濃いブラウンの文字色 */
             scroll-behavior: smooth;
         }
-        .text-warm-yellow { color: #fde047; }
-        .bg-warm-yellow { background-color: #fde047; }
-        .gradient-night {
-            background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+        /* オレンジベースの配色設定 */
+        .text-main-orange { color: #ea580c; }
+        .bg-main-orange { background-color: #f97316; }
+        .bg-light-orange { background-color: #fff7ed; }
+        .border-main-orange { border-color: #fb923c; }
+        
+        .gradient-sunset {
+            background: linear-gradient(180deg, #ffedd5 0%, #fffaf5 100%);
         }
         .card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: white;
+            border: 1px solid #ffedd5;
             transition: all 0.6s ease-out;
             opacity: 0;
             transform: translateY(20px);
+            box-shadow: 0 4px 20px rgba(234, 88, 12, 0.05);
         }
         .card.visible {
             opacity: 1;
             transform: translateY(0);
         }
         .soft-shadow {
-            box-shadow: 0 0 20px rgba(253, 224, 71, 0.2);
+            box-shadow: 0 10px 30px rgba(234, 88, 12, 0.15);
         }
         .fade-in {
             animation: fadeIn 1.5s ease-out forwards;
@@ -45,58 +49,59 @@
 <body class="antialiased">
 
     <!-- Hero Section -->
-    <header class="relative h-screen flex items-center justify-center overflow-hidden">
+    <header class="relative h-screen flex items-center justify-center overflow-hidden gradient-sunset">
         <div class="absolute inset-0 z-0">
-            <!-- Background Decoration (Stars/Light) -->
-            <div class="absolute top-20 left-10 w-2 h-2 bg-white rounded-full opacity-50 animate-pulse"></div>
-            <div class="absolute top-40 right-20 w-1 h-1 bg-white rounded-full opacity-30"></div>
-            <div class="absolute bottom-1/3 left-1/4 w-48 h-48 bg-yellow-500 rounded-full mix-blend-screen filter blur-3xl opacity-10"></div>
+            <!-- Background Decoration -->
+            <div class="absolute top-20 left-10 w-4 h-4 bg-orange-200 rounded-full opacity-40 animate-pulse"></div>
+            <div class="absolute top-40 right-20 w-2 h-2 bg-orange-300 rounded-full opacity-30"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-64 h-64 bg-orange-400 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
+            <div class="absolute top-1/3 left-1/3 w-48 h-48 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
         </div>
         
         <div class="relative z-10 text-center px-6 fade-in">
-            <h1 class="text-5xl md:text-7xl font-bold mb-6 tracking-[0.2em]">あのま</h1>
-            <p class="text-lg md:text-2xl text-warm-yellow tracking-widest mb-10">夜に灯る、もうひとつの家</p>
-            <div class="w-16 h-1 bg-warm-yellow mx-auto rounded-full"></div>
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 tracking-[0.2em] text-orange-900">あのま</h1>
+            <p class="text-lg md:text-2xl text-main-orange tracking-widest mb-10 font-bold">夜に灯る、もうひとつの家</p>
+            <div class="w-16 h-1 bg-main-orange mx-auto rounded-full"></div>
         </div>
         
         <div class="absolute bottom-10 w-full text-center animate-bounce">
-            <span class="text-sm opacity-60 tracking-widest">scroll</span>
+            <span class="text-sm text-orange-400 tracking-widest uppercase">scroll</span>
         </div>
     </header>
 
     <!-- Philosophy Section -->
     <section class="py-24 px-6 max-w-2xl mx-auto space-y-16">
         <div class="text-center">
-            <h2 class="text-2xl font-bold mb-10 tracking-widest">あのまとは。</h2>
-            <p class="leading-[2.2] mb-8 text-lg">
+            <h2 class="text-2xl font-bold mb-10 tracking-widest text-orange-900">あのまとは。</h2>
+            <p class="leading-[2.2] mb-8 text-lg text-orange-800">
                 夜に働く親と子どもを、そっと支える場所です。<br>
                 名前の由来は、子どもにとっての<br>
-                <span class="text-warm-yellow font-bold">“家と学校の間”</span>にある居場所、<br>
+                <span class="text-main-orange font-bold border-b-2 border-orange-200">“家と学校の間”</span>にある居場所、<br>
                 「〜の間（ま）」からきています。
             </p>
         </div>
 
         <div class="card p-10 rounded-[2.5rem] soft-shadow text-center">
-            <h3 class="text-xl font-bold mb-8 tracking-widest">「あ」に込めた願い</h3>
+            <h3 class="text-xl font-bold mb-8 tracking-widest text-orange-900">「あ」に込めた願い</h3>
             <div class="grid grid-cols-2 gap-6">
-                <div class="p-4 bg-white/5 rounded-2xl"><p class="text-2xl mb-1">愛</p><p class="text-[10px] opacity-50 uppercase tracking-tighter">Ai</p></div>
-                <div class="p-4 bg-white/5 rounded-2xl"><p class="text-2xl mb-1">ありがとう</p><p class="text-[10px] opacity-50 uppercase tracking-tighter">Arigato</p></div>
-                <div class="p-4 bg-white/5 rounded-2xl"><p class="text-2xl mb-1">安心</p><p class="text-[10px] opacity-50 uppercase tracking-tighter">Anshin</p></div>
-                <div class="p-4 bg-white/5 rounded-2xl"><p class="text-2xl mb-1">安全</p><p class="text-[10px] opacity-50 uppercase tracking-tighter">Anzen</p></div>
-                <div class="col-span-2 p-6 border-t border-white/10 mt-2">
-                    <p class="text-xl md:text-2xl text-warm-yellow font-bold tracking-widest">明日へとつながる希望</p>
+                <div class="p-4 bg-orange-50 rounded-2xl"><p class="text-2xl mb-1 text-main-orange font-bold">愛</p><p class="text-[10px] text-orange-300 uppercase tracking-tighter">Ai</p></div>
+                <div class="p-4 bg-orange-50 rounded-2xl"><p class="text-2xl mb-1 text-main-orange font-bold">ありがとう</p><p class="text-[10px] text-orange-300 uppercase tracking-tighter">Arigato</p></div>
+                <div class="p-4 bg-orange-50 rounded-2xl"><p class="text-2xl mb-1 text-main-orange font-bold">安心</p><p class="text-[10px] text-orange-300 uppercase tracking-tighter">Anshin</p></div>
+                <div class="p-4 bg-orange-50 rounded-2xl"><p class="text-2xl mb-1 text-main-orange font-bold">安全</p><p class="text-[10px] text-orange-300 uppercase tracking-tighter">Anzen</p></div>
+                <div class="col-span-2 p-6 border-t border-orange-100 mt-2">
+                    <p class="text-xl md:text-2xl text-main-orange font-bold tracking-widest">明日へとつながる希望</p>
                 </div>
             </div>
-            <p class="mt-8 text-sm opacity-60 italic">そして、味光路（あじこうじ）の「あ」</p>
+            <p class="mt-8 text-sm text-orange-400 italic font-bold">そして、味光路（あじこうじ）の「あ」</p>
         </div>
     </section>
 
     <!-- Message Section -->
-    <section class="py-24 bg-white text-slate-900 rounded-t-[4rem]">
+    <section class="py-24 bg-orange-600 text-white rounded-t-[4rem] shadow-inner">
         <div class="max-w-2xl mx-auto px-6">
             <div class="mb-20 text-center md:text-left">
                 <h2 class="text-3xl font-bold mb-8">誰も悪くありません。</h2>
-                <div class="space-y-6 text-slate-600 leading-relaxed text-lg">
+                <div class="space-y-6 text-orange-50 leading-relaxed text-lg">
                     <p>
                         夜に働くお母さんがいます。<br>
                         その時間、ひとりで過ごしている子どもがいます。
@@ -105,33 +110,33 @@
                         誰も悪くありません。<br>
                         ただ、それぞれが一生懸命に生きているだけ。
                     </p>
-                    <p class="text-slate-900 font-bold border-l-4 border-warm-yellow pl-4">
+                    <p class="text-white font-bold border-l-4 border-yellow-400 pl-4 bg-orange-700/30 py-4 rounded-r-xl">
                         だからこそ「あのま」は、<br>
                         夜という時間に、あたたかい灯りをともします。
                     </p>
                 </div>
             </div>
 
-            <div class="grid gap-8">
-                <div class="flex items-center gap-6 p-6 bg-slate-50 rounded-3xl">
-                    <div class="w-16 h-16 flex-shrink-0 bg-yellow-100 flex items-center justify-center rounded-2xl text-2xl text-yellow-600 font-bold">食</div>
+            <div class="grid gap-6">
+                <div class="flex items-center gap-6 p-6 bg-white/10 rounded-3xl border border-white/20">
+                    <div class="w-16 h-16 flex-shrink-0 bg-white flex items-center justify-center rounded-2xl text-2xl text-orange-600 font-bold">食</div>
                     <div>
                         <h4 class="font-bold text-xl mb-1">温かいごはん</h4>
-                        <p class="text-sm text-slate-500">お腹も心も満たされる、手作りの食事を提供します。</p>
+                        <p class="text-sm text-orange-100">お腹も心も満たされる、手作りの食事を提供します。</p>
                     </div>
                 </div>
-                <div class="flex items-center gap-6 p-6 bg-slate-50 rounded-3xl">
-                    <div class="w-16 h-16 flex-shrink-0 bg-blue-100 flex items-center justify-center rounded-2xl text-2xl text-blue-600 font-bold">守</div>
+                <div class="flex items-center gap-6 p-6 bg-white/10 rounded-3xl border border-white/20">
+                    <div class="w-16 h-16 flex-shrink-0 bg-white flex items-center justify-center rounded-2xl text-2xl text-orange-600 font-bold">守</div>
                     <div>
                         <h4 class="font-bold text-xl mb-1">安心できる大人の見守り</h4>
-                        <p class="text-sm text-slate-500">否定せず、ただそばにいる。安心できる大人が見守ります。</p>
+                        <p class="text-sm text-orange-100">否定せず、ただそばにいる。安心できる大人が見守ります。</p>
                     </div>
                 </div>
-                <div class="flex items-center gap-6 p-6 bg-slate-50 rounded-3xl">
-                    <div class="w-16 h-16 flex-shrink-0 bg-green-100 flex items-center justify-center rounded-2xl text-2xl text-green-600 font-bold">家</div>
+                <div class="flex items-center gap-6 p-6 bg-white/10 rounded-3xl border border-white/20">
+                    <div class="w-16 h-16 flex-shrink-0 bg-white flex items-center justify-center rounded-2xl text-2xl text-orange-600 font-bold">家</div>
                     <div>
                         <h4 class="font-bold text-xl mb-1">「ただいま」「おかえり」</h4>
-                        <p class="text-sm text-slate-500">自然に言葉が交わされる、家のように落ち着ける空間です。</p>
+                        <p class="text-sm text-orange-100">自然に言葉が交わされる、家のように落ち着ける空間です。</p>
                     </div>
                 </div>
             </div>
@@ -139,45 +144,52 @@
     </section>
 
     <!-- Closing Message -->
-    <section class="py-32 px-6 text-center gradient-night">
+    <section class="py-32 px-6 text-center gradient-sunset">
         <div class="max-w-2xl mx-auto">
-            <p class="text-2xl md:text-3xl mb-10 leading-relaxed tracking-widest font-bold">
+            <p class="text-2xl md:text-3xl mb-10 leading-relaxed tracking-widest font-bold text-orange-900">
                 夜の街を、<br>
                 やさしさのある街へ。
             </p>
-            <p class="text-base opacity-70 mb-16 leading-[2]">
+            <p class="text-base text-orange-700 mb-16 leading-[2]">
                 ここで過ごす時間が、<br>
                 子どもたちの“明日”につながりますように。<br>
                 それが、あのまの願いです。
             </p>
             
-            <button id="contactBtn" class="inline-block bg-warm-yellow text-slate-900 px-12 py-5 rounded-full font-bold shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300">
+            <button id="contactBtn" class="inline-block bg-main-orange text-white px-12 py-5 rounded-full font-bold shadow-xl hover:bg-orange-600 active:scale-95 transition-all duration-300">
                 お問い合わせ・ご相談
             </button>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="py-12 text-center border-t border-white/5 text-xs opacity-30 tracking-widest">
+    <footer class="py-12 text-center border-t border-orange-100 text-xs text-orange-300 tracking-widest">
         &copy; 2024 あのま - 味光路
     </footer>
 
     <!-- Contact Modal -->
     <div id="modal" class="fixed inset-0 z-50 flex items-center justify-center p-6 hidden">
-        <div class="absolute inset-0 bg-black/80 backdrop-blur-md" id="modalOverlay"></div>
-        <div class="relative bg-slate-800 p-10 rounded-[2.5rem] max-w-sm w-full border border-white/10 shadow-2xl">
-            <h3 class="text-2xl font-bold mb-6 text-center">お問い合わせ</h3>
+        <div class="absolute inset-0 bg-orange-950/60 backdrop-blur-md" id="modalOverlay"></div>
+        <div class="relative bg-white p-8 rounded-[2.5rem] max-w-sm w-full border border-orange-100 shadow-2xl max-h-[90vh] overflow-y-auto">
+            <h3 class="text-2xl font-bold mb-6 text-center text-orange-900">お問い合わせ</h3>
             <div class="space-y-6 mb-8 text-center">
-                <p class="text-sm leading-relaxed opacity-80">
-                    LINEメッセージ、またはお電話にてお気軽にご連絡ください。
+                <p class="text-sm leading-relaxed text-orange-700">
+                    LINE公式アカウント、またはお電話にてお気軽にご連絡ください。
                 </p>
-                <div class="p-4 bg-white/5 rounded-2xl">
-                    <p class="text-xs opacity-50 mb-1">お電話はこちら</p>
-                    <p class="text-xl font-bold tracking-widest">000-0000-0000</p>
+                
+                <!-- LINE QR Code -->
+                <div class="bg-white p-4 rounded-2xl inline-block mx-auto mb-4 border border-orange-100 shadow-sm">
+                    <img src="https://qr-official.line.me/gs/M_843eagsn_BW.png?oat_content=qr" alt="あのま公式LINE QRコード" class="w-32 h-32 mx-auto">
+                    <p class="text-[10px] text-orange-900 mt-2 font-bold">公式LINEで相談する</p>
                 </div>
-                <p class="text-[10px] opacity-40">受付時間: 17:00 〜 21:00</p>
+
+                <div class="p-4 bg-orange-50 rounded-2xl border border-orange-100">
+                    <p class="text-xs text-orange-400 mb-1">お電話はこちら</p>
+                    <a href="tel:07090500488" class="text-xl font-bold tracking-widest text-main-orange">070-9050-0488</a>
+                </div>
+                <p class="text-[10px] text-orange-300 font-bold">受付時間: 11:00 〜 19:00</p>
             </div>
-            <button id="closeBtn" class="w-full py-4 bg-white/10 hover:bg-white/20 rounded-2xl font-bold transition-colors">閉じる</button>
+            <button id="closeBtn" class="w-full py-4 bg-orange-100 text-orange-600 hover:bg-orange-200 rounded-2xl font-bold transition-colors">閉じる</button>
         </div>
     </div>
 
